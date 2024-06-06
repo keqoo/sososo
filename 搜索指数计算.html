@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关键词搜索量计算工具</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        label, input, button {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px 20px;
+        }
+    </style>
+    <script>
+        function calculateQV() {
+            const rank = parseFloat(document.getElementById('rank').value);
+            let qv;
+
+            if (isNaN(rank) || rank <= 0) {
+                alert("请输入有效的正数作为热度值");
+                return;
+            }
+
+            if (rank >= 4605 && rank <= 4975) {
+                qv = rank - 4604;
+            } else if (rank > 4975) {
+                qv = 2.5 * Math.exp(0.001 * rank);
+            } else {
+                alert("请输入大于4604的热度值");
+                return;
+            }
+
+            document.getElementById('result').innerText = `关键词搜索量: ${qv.toFixed(2)}`;
+        }
+    </script>
+</head>
+<body>
+    <h1>欢迎使用关键词搜索量计算工具</h1>
+    <label for="rank">输入热度值:</label>
+    <input type="number" id="rank" step="any" min="0">
+    <button onclick="calculateQV()">开始</button>
+    <p id="result"></p>
+</body>
+</html>
